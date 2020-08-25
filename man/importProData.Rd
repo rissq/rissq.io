@@ -4,13 +4,7 @@
 \alias{importProData}
 \title{Import information}
 \usage{
-importProData(
-  datapath,
-  pro = NA,
-  characteristic = NA,
-  propath = NA,
-  characteristicpath = NA
-)
+importProData(datapath, metadatapath = NA, pro = NA, characteristic = NA)
 }
 \description{
 Import information

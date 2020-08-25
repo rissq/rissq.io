@@ -5,13 +5,11 @@
 \title{Import MSA information}
 \usage{
 importMSAnalysis(
-  metapath,
+  metadatapath,
+  datapath = NA,
   pro = NA,
   characteristic = NA,
-  prodata = NA,
-  propath = NA,
-  characteristicpath = NA,
-  prodatapath = NA
+  prodata = NA
 )
 }
 \description{

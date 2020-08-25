@@ -68,28 +68,27 @@ importProcess <- function(metapath, characteristics = list()) {
 #' Import MSA information
 #' @name importMSAnalysis
 #' @export
-importMSAnalysis <- function(metapath, pro = NA, characteristic = NA, prodata = NA,
-                             propath = NA, characteristicpath = NA, prodatapath = NA) {
+importMSAnalysis <- function(metadatapath, datapath = NA, pro = NA, characteristic = NA, prodata = NA) {
 
-  if(missing(metapath)) {
+  if(missing(metadatapath)) {
     stop("[Import MSA validation: ] Path to file must be specified")
   }
 
-  metadata <- readxl::read_excel(metapath,
+  metadata <- readxl::read_excel(metadatapath,
                                      sheet = "analysis")
 
   method <- tolower(metadata[[8,2]])
 
-  if(!is.na(propath)) {
-    pro = importProcess(propath)
+  if(!is.na(metadatapath) && is.na(pro)) {
+    pro = importProcess(metadatapath)
   }
 
-  if(!is.na(characteristicpath)) {
-    characteristic = importCharacteristic(characteristicpath)
+  if(!is.na(metadatapath) && is.na(characteristic)) {
+    characteristic = importCharacteristic(metadatapath)
   }
 
-  if(!is.na(prodatapath)) {
-    prodata = importProData(prodatapath, pro, characteristic)
+  if( !is.na(metadatapath) && !is.na(datapath) && is.na(prodata)) {
+    prodata = importProData(data = datapath, metadatapath = metadatapath, pro, characteristic)
   }
 
   if(missing(pro)) {
@@ -154,7 +153,7 @@ importMSAnalysis <- function(metapath, pro = NA, characteristic = NA, prodata = 
 #' Import information
 #' @name importProData
 #' @export
-importProData <- function(datapath, pro = NA, characteristic = NA, propath = NA, characteristicpath = NA) {
+importProData <- function(datapath, metadatapath = NA, pro = NA, characteristic = NA) {
 
   if(missing(datapath)) {
     stop("[Import ProData validation: ] Path to file must be specified")
@@ -162,12 +161,12 @@ importProData <- function(datapath, pro = NA, characteristic = NA, propath = NA,
 
   data <-read.csv(datapath)
 
-  if(!is.na(propath)) {
-    pro = importProcess(propath)
+  if(!is.na(metadatapath) && is.na(pro)) {
+    pro = importProcess(metadatapath)
   }
 
-  if(!is.na(characteristicpath)) {
-    characteristic = importCharacteristic(characteristicpath)
+  if(!is.na(metadatapath) && is.na(characteristic)) {
+    characteristic = importCharacteristic(metadatapath)
   }
 
   if(missing(pro)) {
