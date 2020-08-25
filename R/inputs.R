@@ -65,6 +65,42 @@ importProcess <- function(metapath, characteristics = list()) {
   return(Object)
 }
 
+#' Import information
+#' @name importProData
+#' @export
+importProData <- function(datapath, metadatapath = NA, pro = NA, characteristic = NA) {
+
+  if(missing(datapath)) {
+    stop("[Import ProData validation: ] Path to file must be specified")
+  }
+
+  data <-read.csv(datapath)
+
+  if(!is.na(metadatapath) && is.na(pro)) {
+    pro = importProcess(metadatapath)
+  }
+
+  if(!is.na(metadatapath) && is.na(characteristic)) {
+    characteristic = importCharacteristic(metadatapath)
+  }
+
+  if(missing(pro)) {
+    stop("[Import ProData validation: ] Process object or path to metadata must be given.")
+  }
+
+  if(missing(characteristic)) {
+    stop("[Import ProData validation: ] Characteristic object or path to metadata must be given.")
+  }
+
+  Object <- .ProData(
+    pro = pro,
+    characteristic = characteristic,
+    data = data
+  )
+
+  return(Object)
+}
+
 #' Import MSA information
 #' @name importMSAnalysis
 #' @export
@@ -150,38 +186,4 @@ importMSAnalysis <- function(metadatapath, datapath = NA, pro = NA, characterist
   return(Object)
 }
 
-#' Import information
-#' @name importProData
-#' @export
-importProData <- function(datapath, metadatapath = NA, pro = NA, characteristic = NA) {
 
-  if(missing(datapath)) {
-    stop("[Import ProData validation: ] Path to file must be specified")
-  }
-
-  data <-read.csv(datapath)
-
-  if(!is.na(metadatapath) && is.na(pro)) {
-    pro = importProcess(metadatapath)
-  }
-
-  if(!is.na(metadatapath) && is.na(characteristic)) {
-    characteristic = importCharacteristic(metadatapath)
-  }
-
-  if(missing(pro)) {
-    stop("[Import ProData validation: ] Process object or path to metadata must be given.")
-  }
-
-  if(missing(characteristic)) {
-    stop("[Import ProData validation: ] Characteristic object or path to metadata must be given.")
-  }
-
-  Object <- .ProData(
-    pro = pro,
-    characteristic = characteristic,
-    data = data
-  )
-
-  return(Object)
-}
