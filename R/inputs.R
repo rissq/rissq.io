@@ -37,7 +37,7 @@ importCharacteristic <- function(metapath) {
     L = as.numeric(metadata[[7,2]]),
     pnc = as.numeric(metadata[[8,2]]),
     digits = as.numeric(metadata[[9,2]]),
-    units = as.numeric(metadata[[10,2]])
+    units = metadata[[10,2]]
   )
 
   return(Object)
